@@ -6,23 +6,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class maze {
+	Location c;
+	Location e;
 
-	private int rows;
-	private int cols;
-	//
-	private int startCol;
-	private int startRow;
-	private int endRow;
-	private int endCol;
 	private Object a;
 
-	maze(int rows, int cols, int startCol, int startRow, int endRow, int endCol, char[][] a) {
-		this.rows = rows;
-		this.cols = cols;
-		this.startCol = startCol;
-		this.startRow = startRow;
-		this.endRow = startRow;
-		this.endCol = endCol;
+	maze(int startCol, int startRow, int endRow, int endCol, char[][] a) {
+		c = new Location(startRow, startCol);
+		e = new Location(endRow, endCol);
+// add queue add c into queue 
 		this.a = a;
 
 	}
@@ -45,7 +37,7 @@ public class maze {
 		int startCol = in.nextInt();
 		int endRow = in.nextInt();
 		int endCol = in.nextInt();
-		// method used to create a 2D array
+
 		in.nextLine();
 		char[][] c = new char[rows][cols];
 		for (int i = 0; i < rows; i++)
@@ -61,3 +53,4 @@ public class maze {
 		BufferedReader br = new BufferedReader(isr);
 		return br.readLine();
 	}
+}
