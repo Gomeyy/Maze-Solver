@@ -22,8 +22,7 @@ class loc {
     }
 
     boolean equals(loc l) {
-        if (l.getY() == this.y)
-            return l.getX() == this.x;
+        if (l.getY() == this.y) return l.getX() == this.x;
         return false;
     }
 }
@@ -51,16 +50,6 @@ class locQueue {
         queArray[++rear] = j;         // increment rear and insert
         nItems++;                     // one more item
     }
-
-    void insert(locQueue l) {
-        while (!l.isEmpty()) {
-            if (rear == maxSize - 1)         // deal with wraparound
-                rear = -1;
-            loc j = l.remove();
-            queArray[++rear] = j;         // increment rear and insert
-            nItems++;
-        }
-    }
     //--------------------------------------------------------------
     loc remove()         // take item from front of queue
     {
@@ -85,7 +74,7 @@ public class Maze {
     private display disp;
     private locQueue queue;
 
-    Maze(int rows, int cols, loc c, loc e, char[][] m){
+    Maze(int rows, int cols, loc c, loc e, char[][] m) {
         this.curr = c;
         this.end = e;
         this.arr = m;
@@ -107,8 +96,7 @@ public class Maze {
         return c;
     }
 
-    private locQueue checkN(char[][] c, loc l) {
-        locQueue temp = new locQueue(4);
+    private void checkN(char[][] c, loc l) {
         for (int i = 0; i < 4; i++) {
             int y = l.getY();
             int x = l.getX();
@@ -129,27 +117,23 @@ public class Maze {
             if (0 <= y && y <= c.length - 1) //Check y bounds
                 if (0 <= x && x <= c[0].length - 1) //Check x bounds
                     if (c[y][x] == ' ') { //Check if blank
-                        temp.insert(new loc(x, y)); //Insert into temp queue
+                        queue.insert(new loc(x, y)); //Insert into the queue
                     }
         }
-        return temp;
     }
 
     private void solve() {
         pause(500);
+        boolean run;
         do {
             pause(300);
             curr = queue.remove(); //Replace curr with new curr from top of queue
-            if (curr.equals(end)) { //Check if we finished
-                System.out.println("Stop");
-                arr = visited(arr, curr);
-                disp.update(arr);
-                break;
-            }
-            arr = visited(arr, curr); //Change array to list visited
-            queue.insert(checkN(arr, curr)); //Insert new
+            run = !curr.equals(end); //Check if we reached the end
+            arr = visited(arr, curr); //Change array loc to visited
+            checkN(arr, curr); //Insert new empty spots into queue
             disp.update(arr); //Update display
-        } while (!queue.isEmpty());
+        } while (!queue.isEmpty() && run);
+        System.out.println("Stop");
     }
 
     public static void main(String[] args) throws IOException {
