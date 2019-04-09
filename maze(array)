@@ -9,7 +9,7 @@ public class maze {
 	Location c;
 	Location e;
 
-	private Object a;
+	private char[][]a;
 
 	maze(int startCol, int startRow, int endRow, int endCol, char[][] a) {
 		c = new Location(startRow, startCol);
