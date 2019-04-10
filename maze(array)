@@ -6,22 +6,27 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class maze {
-	Location c;
-	Location e;
+	private Location c;
+	private Location e;
+	private LocationQueue Loc_qu;
 
-	private char[][]a;
+	private char[][] a;
 
 	maze(int startCol, int startRow, int endRow, int endCol, char[][] a) {
 		c = new Location(startRow, startCol);
 		e = new Location(endRow, endCol);
-// add queue add c into queue 
+		
+		Loc_qu = new LocationQueue();
+		// c is current 
+		Loc_qu.insert(c); 
+		// add queue add c into queue
 		this.a = a;
 
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 
-		int value;
+		
 
 		String filename;
 
@@ -47,29 +52,28 @@ public class maze {
 			System.out.println(Arrays.toString(row));
 		in.close();
 	}
+
 	public class Location {
 
-	int row;
-	int column;
+		int row;
+		int column;
 
-	Location(int row, int col) {
-		this.row = row;
-		this.column = col;
+		Location(int row, int col) {
+			this.row = row;
+			this.column = col;
+		}
+
+		int getRowLocation() {
+			return row;
+		}
+
+		int getColLocation() {
+			return column;
+		}
 	}
-
-	int getRowLocation() {
-		return row;
-	}
-
-	int getColLocation() {
-		return column;
-	}
-}
-
 
 	private static String getString() throws IOException {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		return br.readLine();
 	}
-}
